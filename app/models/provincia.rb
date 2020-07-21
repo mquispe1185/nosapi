@@ -37,4 +37,24 @@ class Provincia < ApplicationRecord
         end
           
     end
+
+    def self.cargaafi
+        require 'csv'
+        table = CSV.parse(File.read("/home/daniq/adherentes.csv"), headers: true)
+        
+        (0..52).each do |i|
+           afi = Afiliado.find_by(dni: table[i]['dni'])
+
+           if afi.nil?
+               nuevo = Afiliado.new(dni: table[i]['dni'],nombre: table[i]['nombre'], apellido: table[i]['apellido'],sexo: table[i]['sexo'], 
+                    domicilio: table[i]['dom'], telefono: table[i]['tel'], provincia_id: 45, email: table[i]['mail'], origen_id: 2)
+                    if nuevo.save
+                    puts 'creado'
+                    else
+                       puts nuevo.errors.full_messages
+                    end
+           end
+        end
+  
+    end
 end

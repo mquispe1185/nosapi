@@ -1,8 +1,8 @@
 class Afiliado < ApplicationRecord
   validates :dni, uniqueness: true 
   belongs_to :provincia
-  belongs_to :localidad
-  belongs_to :departamento
+  belongs_to :localidad, optional: true
+  belongs_to :departamento, optional: true
   belongs_to :contactado_by, optional: true
   belongs_to :afiliado_by, optional: true
   belongs_to :adherido_by, optional: true
