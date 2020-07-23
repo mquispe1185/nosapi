@@ -47,7 +47,7 @@ class Provincia < ApplicationRecord
 
            if afi.nil?
                nuevo = Afiliado.new(dni: table[i]['dni'],nombre: table[i]['nombre'], apellido: table[i]['apellido'],sexo: table[i]['sexo'], 
-                    domicilio: table[i]['dom'], telefono: table[i]['tel'], provincia_id: 45, email: table[i]['mail'], origen_id: 2)
+                    domicilio: table[i]['dom'], telefono: table[i]['tel'], provincia_id: 21, email: table[i]['mail'], origen_id: 6)
                     if nuevo.save
                     puts 'creado'
                     else
