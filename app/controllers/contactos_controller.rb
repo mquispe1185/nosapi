@@ -3,7 +3,7 @@ class ContactosController < ApplicationController
 
   # GET /contactos
   def index
-    @contactos = Contacto.where(activo: true).order(:id)
+    @contactos = Contacto.where(activo: true).order(id: :desc)
 
     render json: @contactos
   end
@@ -27,7 +27,7 @@ class ContactosController < ApplicationController
   # PATCH/PUT /contactos/1
   def update
     if @contacto.update(contacto_params)
-      @contactos = Contacto.all
+      @contactos = Contacto.where(activo: true).order(id: :desc)
 
       render json: @contactos
     else
@@ -38,7 +38,7 @@ class ContactosController < ApplicationController
   # DELETE /contactos/1
   def destroy
     @contacto.update(activo: false)
-    @contactos = Contacto.all
+    @contactos = Contacto.where(activo: true).order(id: :desc)
       render json: @contactos
   end
 
