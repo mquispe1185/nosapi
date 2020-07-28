@@ -3,7 +3,7 @@ class AfiliadosController < ApplicationController
 
   # GET /afiliados
   def index
-    @afiliados = Afiliado.all
+    @afiliados = Afiliado.where(activo: true)
 
     render json: @afiliados
   end
@@ -16,6 +16,11 @@ class AfiliadosController < ApplicationController
   # GET /afiliados/1
   def show
     render json: @afiliado
+  end
+
+  def stats
+    @afiliados = Afiliado.all
+    render json: @afiliados, each_serializer: AfiliadoEstadisticaSerializer
   end
 
   # POST /afiliados
@@ -54,7 +59,7 @@ class AfiliadosController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def afiliado_params
       params.permit(:apellido, :nombre, :dni, :sexo, :domicilio, 
-        :provincia_id, :localidad_id, :departamento_id, :telefono, :celular, :email,:origen_id,
-        :contactado, :afiliado, :adherido, :contactado_by_id, :afiliado_by_id, :adherido_by_id, :observaciones)
+        :provincia_id, :localidad_id, :departamento_id, :telefono, :celular, :email,:origen_id,:has_dni,:fechanac,:profesion,
+        :contactado, :afiliado, :adherido, :contactado_by_id, :afiliado_by_id, :adherido_by_id, :observaciones, :created_by_id, :updated_by_id)
     end
 end

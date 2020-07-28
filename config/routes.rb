@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :contactos
+  resources :estadocontactos
   resources :origenes
   resources :afiliados
   resources :localidades
@@ -11,4 +13,5 @@ Rails.application.routes.draw do
 
   #agregados
   get '/search_afiliado', to: 'afiliados#search'
+  get '/stats_afiliados', to: 'afiliados#stats'
 end

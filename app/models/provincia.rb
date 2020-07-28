@@ -57,4 +57,19 @@ class Provincia < ApplicationRecord
         end
   
     end
+
+    def self.cargacon
+        require 'csv'
+        table = CSV.parse(File.read("/home/daniq/contactosnos.csv"), headers: true)
+        
+        (0..273).each do |i|
+           origen = Origen.where('descripcion ILIKE ?', "%#{table[i]['origen']}%").first
+
+           if !origen.nil?
+               Contacto.create(nombre: table[i]['nombre'], 
+                 telefono: table[i]['tel'], email: table[i]['mail'], origen_id: origen.id, created_by_id: 1, estadocontacto_id: 1)
+           end
+        end
+  
+    end
 end

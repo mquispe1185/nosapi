@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_06_215914) do
+ActiveRecord::Schema.define(version: 2020_07_28_010804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,9 @@ ActiveRecord::Schema.define(version: 2020_07_06_215914) do
     t.datetime "updated_at", null: false
     t.bigint "origen_id"
     t.string "email"
+    t.boolean "has_dni", default: false
+    t.date "fechanac"
+    t.string "profesion"
     t.index ["adherido_by_id"], name: "index_afiliados_on_adherido_by_id"
     t.index ["afiliado_by_id"], name: "index_afiliados_on_afiliado_by_id"
     t.index ["contactado_by_id"], name: "index_afiliados_on_contactado_by_id"
@@ -52,6 +55,26 @@ ActiveRecord::Schema.define(version: 2020_07_06_215914) do
     t.index ["updated_by_id"], name: "index_afiliados_on_updated_by_id"
   end
 
+  create_table "contactos", force: :cascade do |t|
+    t.string "nombre"
+    t.string "telefono"
+    t.string "email"
+    t.bigint "origen_id"
+    t.bigint "estadocontacto_id"
+    t.bigint "usuario_id"
+    t.string "observacion"
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "activo", default: true
+    t.index ["created_by_id"], name: "index_contactos_on_created_by_id"
+    t.index ["estadocontacto_id"], name: "index_contactos_on_estadocontacto_id"
+    t.index ["origen_id"], name: "index_contactos_on_origen_id"
+    t.index ["updated_by_id"], name: "index_contactos_on_updated_by_id"
+    t.index ["usuario_id"], name: "index_contactos_on_usuario_id"
+  end
+
   create_table "departamentos", force: :cascade do |t|
     t.string "nombre"
     t.bigint "provincia_id"
@@ -59,6 +82,12 @@ ActiveRecord::Schema.define(version: 2020_07_06_215914) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["provincia_id"], name: "index_departamentos_on_provincia_id"
+  end
+
+  create_table "estadocontactos", force: :cascade do |t|
+    t.string "descripcion"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "localidades", force: :cascade do |t|
@@ -137,6 +166,11 @@ ActiveRecord::Schema.define(version: 2020_07_06_215914) do
   add_foreign_key "afiliados", "usuarios", column: "contactado_by_id"
   add_foreign_key "afiliados", "usuarios", column: "created_by_id"
   add_foreign_key "afiliados", "usuarios", column: "updated_by_id"
+  add_foreign_key "contactos", "estadocontactos"
+  add_foreign_key "contactos", "origenes"
+  add_foreign_key "contactos", "usuarios"
+  add_foreign_key "contactos", "usuarios", column: "created_by_id"
+  add_foreign_key "contactos", "usuarios", column: "updated_by_id"
   add_foreign_key "departamentos", "provincias"
   add_foreign_key "localidades", "departamentos"
   add_foreign_key "localidades", "provincias"
