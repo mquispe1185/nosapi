@@ -23,9 +23,9 @@ default: &default
 
 development:
   <<: *default
-  database: nos
+  database: nosbd
   username: postgres
-  password: postgres
+  password: daniq86
   host: localhost
   port: 5432
 
